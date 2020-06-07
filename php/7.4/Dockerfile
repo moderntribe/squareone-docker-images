@@ -20,6 +20,7 @@ RUN apt-get update \
        php7.4-igbinary \
        php7.4-imagick \
        php7.4-imap \
+       php7.4-intl \
        php7.4-mysql \
        php7.4-soap \
        php-mbstring \
