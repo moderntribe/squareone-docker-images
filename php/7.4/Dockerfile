@@ -3,6 +3,18 @@ FROM phpdockerio/php74-fpm:latest
 # Fix debconf warnings upon build
 ARG DEBIAN_FRONTEND=noninteractive
 
+# Passed via an environment variable to docker-compose.yml build: args:
+ARG SQ1_UID=1000
+
+# Add the sq1 user
+RUN useradd -u ${SQ1_UID} sq1
+
+# Add www-data to sq1's group
+RUN usermod -a -G sq1 www-data
+
+# Copy pool customizations to make the www pool run as the sq1 user
+COPY overrides.conf /etc/php/7.4/fpm/pool.d/z-overrides.conf
+
 # Install selected extensions and other stuff
 RUN apt-get update \
     && apt-get -y --no-install-recommends install \
