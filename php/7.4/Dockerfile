@@ -3,18 +3,6 @@ FROM phpdockerio/php74-fpm:latest
 # Fix debconf warnings upon build
 ARG DEBIAN_FRONTEND=noninteractive
 
-# Passed via an environment variable to docker-compose.yml build: args:
-ARG SQ1_UID=1000
-
-# Add the sq1 user
-RUN useradd -u ${SQ1_UID} sq1
-
-# Add www-data to sq1's group
-RUN usermod -a -G sq1 www-data
-
-# Copy pool customizations to make the www pool run as the sq1 user
-COPY overrides.conf /etc/php/7.4/fpm/pool.d/z-overrides.conf
-
 # Install selected extensions and other stuff
 RUN apt-get update \
     && apt-get -y --no-install-recommends install \
@@ -46,5 +34,19 @@ RUN echo "installing WP-CLI" \
     && curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
     && chmod +x wp-cli.phar \
     && mv wp-cli.phar /usr/local/bin/wp
+
+# Copy pool customizations to make the www pool run as the squareone user
+COPY overrides.conf /etc/php/7.4/fpm/pool.d/zzz-overrides.conf
+
+COPY docker-entrypoint.sh /
+ADD /docker-entrypoint.d/ /docker-entrypoint.d/
+ONBUILD ADD /docker-entrypoint.d/ /docker-entrypoint.d/
+
+RUN chmod +x /docker-entrypoint.sh
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
+# Run the original DockerFile's cmd to start php-fpm
+CMD /usr/bin/php-fpm
 
 WORKDIR "/application"
