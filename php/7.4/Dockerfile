@@ -47,4 +47,18 @@ RUN echo "installing WP-CLI" \
     && chmod +x wp-cli.phar \
     && mv wp-cli.phar /usr/local/bin/wp
 
+# Copy pool customizations to make the www pool run as the squareone user
+COPY overrides.conf /etc/php/7.4/fpm/pool.d/zzz-overrides.conf
+
+COPY docker-entrypoint.sh /
+ADD /docker-entrypoint.d/ /docker-entrypoint.d/
+ONBUILD ADD /docker-entrypoint.d/ /docker-entrypoint.d/
+
+RUN chmod +x /docker-entrypoint.sh
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
+# Run the original DockerFile's cmd to start php-fpm
+CMD /usr/bin/php-fpm
+
 WORKDIR "/application"
