@@ -1,33 +1,45 @@
-FROM phpdockerio/php74-fpm:latest
+FROM php:7.4.7-fpm
 
 # Fix debconf warnings upon build
 ARG DEBIAN_FRONTEND=noninteractive
 
+# PHP extension installation helper. See https://github.com/mlocati/docker-php-extension-installer
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/bin/
+
 # Install selected extensions and other stuff
 RUN apt-get update \
     && apt-get -y --no-install-recommends install \
+       default-mysql-client \
        git \
        less \
-       mysql-client \
-       php-memcached \
-       php-pclzip \
-       php-redis \
-       php-xdebug \
-       php-zip \
-       php7.4-bcmath \
-       php7.4-bz2 \
-       php7.4-gd \
-       php7.4-igbinary \
-       php7.4-imagick \
-       php7.4-imap \
-       php7.4-intl \
-       php7.4-mysql \
-       php7.4-soap \
-       php-mbstring \
-       ssmtp \
+       msmtp \
        unzip \
+       wget \
        zip \
-    && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
+    && install-php-extensions \
+       apcu \
+       bcmath \
+       bz2 \
+       gd \
+       igbinary \
+       imagick \
+       imap \
+       intl \
+       memcached \
+       mcrypt \
+       mysqli \
+       opcache \
+       pcntl \
+       readline \
+       redis \
+       soap \
+       xdebug \
+       yaml \
+       zip \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && composer global require hirak/prestissimo \
+    && composer clear-cache \
+    && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* ~/.composer
 
 # WP CLI
 RUN echo "installing WP-CLI" \
