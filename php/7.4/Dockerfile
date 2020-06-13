@@ -11,6 +11,7 @@ RUN apt-get update \
     && apt-get -y --no-install-recommends install \
        default-mysql-client \
        git \
+       gosu \
        less \
        msmtp \
        unzip \
@@ -41,24 +42,31 @@ RUN apt-get update \
     && composer clear-cache \
     && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* ~/.composer
 
+
+# Install fixuid to set the PHP-FPM user
+ARG PHP_USER=squareone
+RUN addgroup --gid 1000 "$PHP_USER" \
+    && adduser --uid 1000 --ingroup "$PHP_USER" --home "/home/$PHP_USER" --shell /bin/bash --disabled-password --gecos "" "$PHP_USER" \
+    && curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.5/fixuid-0.5-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - \
+    && chown root:root /usr/local/bin/fixuid \
+    && chmod 4755 /usr/local/bin/fixuid \
+    && mkdir -p /etc/fixuid \
+    && printf "user: $PHP_USER\ngroup: $PHP_USER\n" > /etc/fixuid/config.yml
+
 # WP CLI
 RUN echo "installing WP-CLI" \
     && curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
     && chmod +x wp-cli.phar \
     && mv wp-cli.phar /usr/local/bin/wp
 
+USER "$PHP_USER:$PHP_USER"
+
+COPY docker-entrypoint /usr/local/bin/
+COPY docker-entrypoint.d /docker-entrypoint.d/
+
 # Copy pool customizations to make the www pool run as the squareone user
-COPY overrides.conf /etc/php/7.4/fpm/pool.d/zzz-overrides.conf
+#COPY overrides.conf /usr/local/etc/php-fpm.d/zz-overrides.conf
 
-COPY docker-entrypoint.sh /
-ADD /docker-entrypoint.d/ /docker-entrypoint.d/
-ONBUILD ADD /docker-entrypoint.d/ /docker-entrypoint.d/
-
-RUN chmod +x /docker-entrypoint.sh
-
-ENTRYPOINT ["/docker-entrypoint.sh"]
-
-# Run the original DockerFile's cmd to start php-fpm
-CMD /usr/bin/php-fpm
+ENTRYPOINT ["docker-entrypoint"]
 
 WORKDIR "/application"

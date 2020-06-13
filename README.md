@@ -33,13 +33,13 @@ Image Name: `moderntribe/squareone-php`
   the first release of a build for PHP 8.0.
 * Tags should follow semantic versioning: `php<version>-<major>.<minor>.<patch>`. `<major>` versions introduce
   breaking changes. `<minor>` versions add features and fix bugs. `<patch>` versions fix bugs.
-  
+
 ### Downstream entrypoint scripts
 
-When using a Dockerfile from this repo in the downstream, you can add custom scripts in the `docker-entrypoint.d` folder.
+When using an image from this repo in the downstream, you can add custom scripts in the `docker-entrypoint.d` folder.
 
-All scripts in there will be copied over and automatically executed with 
+All scripts in there will be copied over and automatically executed with
 [run-parts](https://manpages.ubuntu.com/manpages/trusty/man8/run-parts.8.html)
 
-Keep in mind the limitations of naming these scripts, they must consist entirely of ASCII upper- and lower-case letters, 
-ASCII digits, ASCII underscores, and ASCII minus-hyphens. So no .sh extensions.
+Keep in mind the limitations of naming these scripts, they must consist entirely of ASCII upper- and lower-case
+letters, ASCII digits, ASCII underscores, and ASCII minus-hyphens. So no .sh extensions.

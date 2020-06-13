@@ -6,4 +6,6 @@ if [ -d "$SCRIPT_DIR" ]; then
   /bin/run-parts --verbose "$SCRIPT_DIR"
 fi
 
+set -- php-fpm "$@"
+
 exec "$@"
