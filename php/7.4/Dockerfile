@@ -32,6 +32,7 @@ RUN apt-get update \
        mysqli \
        opcache \
        pcntl \
+       pdo_mysql \
        readline \
        redis \
        soap \
