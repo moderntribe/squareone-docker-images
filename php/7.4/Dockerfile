@@ -14,6 +14,7 @@ RUN apt-get update \
        gosu \
        less \
        msmtp \
+       procps \
        unzip \
        wget \
        zip \
