@@ -13,6 +13,7 @@ RUN apt-get update \
        git \
        gosu \
        less \
+       libsodium-dev \
        msmtp \
        procps \
        unzip \
@@ -35,7 +36,6 @@ RUN apt-get update \
        imap \
        intl \
        json \
-       libsodium \
        mbstring \
        mcrypt \
        memcached \
@@ -49,6 +49,7 @@ RUN apt-get update \
        redis \
        simplexml \
        soap \
+       sodium \
        xdebug \
        xml \
        xmlreader \
