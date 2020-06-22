@@ -13,6 +13,7 @@ RUN apt-get update \
        git \
        gosu \
        less \
+       libsodium-dev \
        msmtp \
        procps \
        unzip \
@@ -22,23 +23,39 @@ RUN apt-get update \
        apcu \
        bcmath \
        bz2 \
+       curl \
+       dom \
+       exif \
+       fileinfo \
+       filter \
        gd \
+       hash \
+       iconv \
        igbinary \
        imagick \
        imap \
        intl \
-       memcached \
+       json \
+       mbstring \
        mcrypt \
+       memcached \
        mysqli \
        opcache \
+       openssl \
        pcntl \
+       pcre \
        pdo_mysql \
        readline \
        redis \
+       simplexml \
        soap \
+       sodium \
        xdebug \
+       xml \
+       xmlreader \
        yaml \
        zip \
+       zlib \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && composer global require hirak/prestissimo \
     && composer clear-cache \
