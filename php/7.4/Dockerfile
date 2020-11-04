@@ -56,7 +56,7 @@ RUN apt-get update \
        yaml \
        zip \
        zlib \
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --1 \
     && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* ~/.composer
 
 
@@ -80,9 +80,6 @@ USER "$PHP_USER:$PHP_USER"
 
 COPY docker-entrypoint /usr/local/bin/
 COPY docker-entrypoint.d /docker-entrypoint.d/
-
-# Copy pool customizations to make the www pool run as the squareone user
-#COPY overrides.conf /usr/local/etc/php-fpm.d/zz-overrides.conf
 
 ENTRYPOINT ["docker-entrypoint"]
 
