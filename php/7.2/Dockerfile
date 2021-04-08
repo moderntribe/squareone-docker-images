@@ -1,4 +1,4 @@
-FROM php:7.2.31-fpm
+FROM php:7.2-fpm
 
 # Fix debconf warnings upon build
 ARG DEBIAN_FRONTEND=noninteractive
