@@ -49,6 +49,7 @@ RUN apt-get update \
        redis \
        simplexml \
        soap \
+       sockets \
        sodium \
        xdebug \
        xml \
