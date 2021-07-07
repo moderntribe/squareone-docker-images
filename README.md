@@ -8,10 +8,10 @@ Image Name: `moderntribe/squareone-php`
 
 ### Supported Tags
 
-* `latest`: The latest Dockerfile version using the most recent PHP version (currently 7.4),
+* `latest`: The latest Dockerfile version using the most recent PHP version (currently 8.0),
   built from the `master` branch.
-* `74-latest`: The latest Dockerfile version for PHP 7.4, built from the `master` branch.
-* `74-<x.y.z>`: Specific Dockerfile versions for PHP 7.4, built based on matching tags.
+* `80-latest`: The latest Dockerfile version for PHP 8.0, built from the `master` branch.
+* `80-<x.y.z>` or `80-<x.y>`: Specific Dockerfile versions for PHP 8.0, built based on matching tags.
 
 ### Adding New Versions
 
