@@ -1,0 +1,22 @@
+# OS generated files #
+######################
+
+.DS_Store
+.DS_Store*
+._*
+*~
+.svn
+.cvs
+*.bak
+*.swp
+
+# IDE generated files #
+######################
+.idea/
+.vscode/
+.phpstorm.meta.php
+
+# Vim generated files #
+#######################
+
+*.un~
