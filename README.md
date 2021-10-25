@@ -1,6 +1,6 @@
 # SquareOne Docker Images
 
-Base docker images for SquareOne projects
+Base docker images for SquareOne projects. [View it on DockerHub](https://hub.docker.com/r/moderntribe/squareone-php).
 
 ## PHP
 
@@ -12,10 +12,14 @@ Image Name: `moderntribe/squareone-php`
   built from the `master` branch.
 * `80-latest`: The latest Dockerfile version for PHP 8.0, built from the `master` branch.
 * `80-<x.y.z>` or `80-<x.y>`: Specific Dockerfile versions for PHP 8.0, built based on matching tags.
+* `74-latest`: The latest Dockerfile version for PHP 7.4, built from the `master` branch.
+* `74-<x.y.z>` or `74-<x.y>`: Specific Dockerfile versions for PHP 7.4, built based on matching tags.
+* We recommend you use the minor version, so you can continue to receive updates when doing a docker pull, 
+e.g. `moderntribe/squareone-php:80-1.0` `moderntribe/squareone-php:74-2.1`
 
 ### Adding New Versions
 
-* Create a directory for the new version, e.g., `/php/8.0/`
+* Create a directory for the new version, e.g., `/php/8.1/`
 * Create the Dockerfile and any supporting files in that directory.
 * Add automated build configurations to Docker Hub `moderntribe/squareone-php` for the PHP version. Here is an
   example of the build rules to create version 8.0:
