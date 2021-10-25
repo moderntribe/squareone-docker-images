@@ -1,4 +1,4 @@
-FROM php:8.0.0-fpm
+FROM php:8.0-fpm
 
 # Fix debconf warnings upon build
 ARG DEBIAN_FRONTEND=noninteractive
@@ -49,6 +49,7 @@ RUN apt-get update \
        redis \
        simplexml \
        soap \
+       sockets \
        sodium \
        xdebug \
        xml \
