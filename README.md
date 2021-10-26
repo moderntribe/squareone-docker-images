@@ -36,7 +36,7 @@ e.g. `moderntribe/squareone-php:80-1.0` `moderntribe/squareone-php:74-2.1`
 * Tag the version, prefixed with the affected PHP version, suffixed with the release version. E.g., `php80-1.0.0` for
   the first release of a build for PHP 8.0.
 * Tags should follow semantic versioning: `php<version>-<major>.<minor>.<patch>`. `<major>` versions introduce
-  breaking changes. `<minor>` versions add features and fix bugs. `<patch>` versions fix bugs.
+  breaking changes. `<minor>` versions add features and fix bugs. `<patch>` versions fix bugs. 
 
 ### Downstream entrypoint scripts
 
