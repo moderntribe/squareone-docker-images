@@ -54,6 +54,7 @@ RUN apt-get update \
        xdebug \
        xml \
        xmlreader \
+       xmlrpc \
        yaml \
        zip \
        zlib \
