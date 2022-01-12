@@ -54,10 +54,11 @@ RUN apt-get update \
        xdebug \
        xml \
        xmlreader \
+       xmlrpc \
        yaml \
        zip \
        zlib \
-    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer --1 \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && apt-get clean; rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* ~/.composer
 
 
@@ -65,7 +66,7 @@ RUN apt-get update \
 ARG PHP_USER=squareone
 RUN addgroup --gid 1000 "$PHP_USER" \
     && adduser --uid 1000 --ingroup "$PHP_USER" --home "/home/$PHP_USER" --shell /bin/bash --disabled-password --gecos "" "$PHP_USER" \
-    && curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.5/fixuid-0.5-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - \
+    && curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.5.1/fixuid-0.5.1-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - \
     && chown root:root /usr/local/bin/fixuid \
     && chmod 4755 /usr/local/bin/fixuid \
     && mkdir -p /etc/fixuid \
