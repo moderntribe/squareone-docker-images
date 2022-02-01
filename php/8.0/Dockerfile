@@ -64,13 +64,16 @@ RUN apt-get update \
 
 # Install fixuid to set the PHP-FPM user
 ARG PHP_USER=squareone
-RUN addgroup --gid 1000 "$PHP_USER" \
-    && adduser --uid 1000 --ingroup "$PHP_USER" --home "/home/$PHP_USER" --shell /bin/bash --disabled-password --gecos "" "$PHP_USER" \
+RUN addgroup --gid 1000 "${PHP_USER}" \
+    && adduser --uid 1000 --ingroup "${PHP_USER}" --home "/home/${PHP_USER}" --shell /bin/bash --disabled-password --gecos "" "${PHP_USER}" \
     && curl -SsL https://github.com/boxboat/fixuid/releases/download/v0.5.1/fixuid-0.5.1-linux-amd64.tar.gz | tar -C /usr/local/bin -xzf - \
     && chown root:root /usr/local/bin/fixuid \
     && chmod 4755 /usr/local/bin/fixuid \
-    && mkdir -p /etc/fixuid \
-    && printf "user: $PHP_USER\ngroup: $PHP_USER\n" > /etc/fixuid/config.yml
+    && mkdir -p /etc/fixuid
+
+# Match volumes from https://github.com/moderntribe/square-one/blob/main/dev/docker/docker-compose.yml
+RUN mkdir -p /application/www && chown "${PHP_USER}:${PHP_USER}" /application/www \
+    && mkdir /application/.composer && chown "${PHP_USER}:${PHP_USER}" /application/.composer
 
 # WP CLI
 RUN echo "installing WP-CLI" \
@@ -78,10 +81,11 @@ RUN echo "installing WP-CLI" \
     && chmod +x wp-cli.phar \
     && mv wp-cli.phar /usr/local/bin/wp
 
-USER "$PHP_USER:$PHP_USER"
-
+COPY fixuid.yml /etc/fixuid/config.yml
 COPY docker-entrypoint /usr/local/bin/
 COPY docker-entrypoint.d /docker-entrypoint.d/
+
+USER "${PHP_USER}:${PHP_USER}"
 
 ENTRYPOINT ["docker-entrypoint"]
 
