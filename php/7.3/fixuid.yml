@@ -1,0 +1,10 @@
+user: squareone
+group: squareone
+paths:
+  - /
+  - /application
+  - /application/www
+  - /application/.composer
+  - /application/wp-cli.yml
+  - /etc/msmtprc
+  - /usr/local/etc/php/conf.d/zz-overrides.ini
