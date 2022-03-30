@@ -36,6 +36,7 @@ RUN apt-get update \
        imap \
        intl \
        json \
+       ldap \
        mbstring \
        mcrypt \
        memcached \
