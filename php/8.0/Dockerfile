@@ -25,6 +25,7 @@ RUN apt-get update \
        bz2 \
        curl \
        dom \
+       ds \
        exif \
        fileinfo \
        filter \
