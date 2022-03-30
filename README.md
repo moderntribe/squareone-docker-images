@@ -29,6 +29,24 @@ e.g. `moderntribe/squareone-php:80-1.0` `moderntribe/squareone-php:74-2.1`
   | Branch      | master              | 80-latest  | Dockerfile          | /php/8.0/     |
   | Tag         | /^php80-([0-9.]+)$/ | 80-{\1}    | Dockerfile          | /php/8.0/     |
 
+### Testing Releases Before Tagging
+
+After you've made changes to a Dockerfile, it should be built locally and tested **before** being released.
+
+* cd into the folder of the `Dockerfile` that was modified
+* Build and tag the image with a custom name: `docker build -t moderntribe/squareone-php:$version-test .`, e.g. `docker build -t moderntribe/squareone-php:74-3.0.6-test .`
+* Test it in the [square-one framework](https://github.com/moderntribe/square-one) by temporarily editing [dev/docker/docker-compose.yml](https://github.com/moderntribe/square-one/blob/main/dev/docker/docker-compose.yml#L30) and updating the `x-php` image.
+
+```yaml
+x-php: &php
+  # Original image
+  # image: moderntribe/squareone-php:74-3.0
+  # Test image
+  image: moderntribe/squareone-php:74-3.0.6-test
+```
+
+* Run `so start` and validate the project successfully loads.
+
 ### Tagging Releases
 
 * Commit and push the update to the repo. This should trigger an automatic build on the `master` branch for the
