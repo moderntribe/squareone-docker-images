@@ -33,6 +33,7 @@ e.g. `moderntribe/squareone-php:80-1.0` `moderntribe/squareone-php:74-2.1`
 
 After you've made changes to a Dockerfile, it should be built locally and tested **before** being released.
 
+* Update the php extension installer image: `docker pull mlocati/php-extension-installer`
 * cd into the folder of the `Dockerfile` that was modified
 * Build and tag the image with a custom name: `docker build -t moderntribe/squareone-php:$version-test .`, e.g. `docker build -t moderntribe/squareone-php:74-3.0.6-test .`
 * Test it in the [square-one framework](https://github.com/moderntribe/square-one) by temporarily editing [dev/docker/docker-compose.yml](https://github.com/moderntribe/square-one/blob/main/dev/docker/docker-compose.yml#L30) and updating the `x-php` image.
